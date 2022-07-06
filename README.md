@@ -1,4 +1,5 @@
 JOTTER APP
+
 I needed a note-taking app to keep track of my to-do list, rather than downloading one I decided that this would be a great way to test out my React skills before tackling a couple of larger projects I had in mind.
 
 Jotter uses local storage and provides the ability to create, edit and delete notes.
