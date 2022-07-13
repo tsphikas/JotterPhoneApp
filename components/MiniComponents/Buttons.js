@@ -1,22 +1,19 @@
-import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { View, StyleSheet, Text, Pressable } from "react-native";
 import { COLORS, SHADOWS, SIZES } from "../../constants";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
-const AddButton = () => {
+const AddButton = ({ handlePress }) => {
   return (
-    <TouchableOpacity>
-      <View style={styles.container} onPress={""}>
-        <Text style={styles.text}>+</Text>
-      </View>
+    <TouchableOpacity style={styles.container} onPress={handlePress}>
+      <Text style={styles.text}>+</Text>
     </TouchableOpacity>
   );
 };
 
-const DeleteButton = () => {
+const DeleteButton = ({ handlePress }) => {
   return (
-    <TouchableOpacity>
-      <View style={styles.deleteButton} onPress={""}>
-        <Text style={styles.deleteText}>Delete</Text>
-      </View>
+    <TouchableOpacity style={styles.deleteButton} onPress={handlePress}>
+      <Text style={styles.deleteText}>Delete</Text>
     </TouchableOpacity>
   );
 };
@@ -25,14 +22,16 @@ export { AddButton, DeleteButton };
 
 const styles = StyleSheet.create({
   container: {
-    position: "absolute",
-    right: 10,
-    bottom: -10,
+    position: "relative",
+    display: "flex",
+    right: "-88%",
+    //bottom: -17,
     backgroundColor: COLORS.blueDark,
     borderRadius: 50,
     width: 36,
     height: 36,
     boxShadow: SHADOWS.dark,
+    zIndex: 150,
   },
 
   text: {
@@ -43,15 +42,15 @@ const styles = StyleSheet.create({
   },
 
   deleteButton: {
-    position: "absolute",
-    right: 0,
+    //position: "absolute",
+    right: "-83%",
     bottom: -10,
     margin: 10,
     marginRight: 10,
   },
 
   deleteText: {
-    color: COLORS.blueDark,
+    color: "red",
     fontSize: SIZES.font,
   },
 });

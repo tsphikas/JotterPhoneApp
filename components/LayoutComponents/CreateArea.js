@@ -3,30 +3,40 @@ import { View, TextInput, StyleSheet } from "react-native";
 import { COLORS, SHADOWS, SIZES } from "../../constants";
 import { AddButton } from "../MiniComponents/Buttons";
 
-const CreateArea = () => {
-  const [text, onChangeText] = useState(null);
-  const [number, onChangeNumber] = useState(null);
+const CreateArea = (props) => {
+  const [note, setNote] = useState("");
+  const [content, setContent] = useState("");
+
+  function submitNote() {
+    const id = Math.random();
+    const key = id;
+    props.onAdd(note, content, id, key);
+    setContent("");
+    setNote("");
+  }
 
   return (
     <View>
       <View style={styles.form}>
         <TextInput
+          name="title"
           style={styles.inputTitle}
-          onChangeText={onChangeText}
-          value={text}
+          onChangeText={setNote}
+          value={note}
           placeholder="Title"
           keyboardType="default"
         />
         <TextInput
+          name="content"
           styles={styles.inputDescription}
-          multiline
-          numberOfLines={4}
-          onChangeText={onChangeNumber}
-          value={number}
+          onChangeText={setContent}
+          value={content}
           placeholder="Make a note..."
           keyboardType="default"
+          multiline
+          numberOfLines={4}
         />
-        <AddButton />
+        <AddButton handlePress={() => submitNote()} />
       </View>
     </View>
   );
