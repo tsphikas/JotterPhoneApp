@@ -13,16 +13,57 @@ import {
 
 import { COLORS, SIZES } from "../constants";
 
-import notes from "../info/notes";
+/* Add Following when time permits */
+/*  1. Pull storage info into separate file
+        import notes from "../info/notes";
+    2.  Use Hashing function instead of Math Random for Key
+        function hashGenerator() {}
+    3.  Add tick box complete function 
+    4.  Prevent adding empty notes
+    5.  Add Icons
+    6.  Add delete all button (AlertBox)
+    */
 
 const Home = () => {
   const [noteArr, setNoteArr] = useState([]);
+
+  React.useEffect(() => {
+    getMe();
+  }, []);
+
+  React.useEffect(() => {
+    storeMe(noteArr);
+  }, [noteArr]);
 
   function addNote(note, content, id, key) {
     setNoteArr((prevNotes) => {
       return [...prevNotes, { note, content, id, key }];
     });
+    storeMe();
   }
+
+  const storeMe = async (noteArr) => {
+    try {
+      if (noteArr != null) {
+        const jsonValue = JSON.stringify(noteArr);
+        await AsyncStorage.setItem("appData", jsonValue);
+      }
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
+  };
+
+  const getMe = async () => {
+    try {
+      const value = await AsyncStorage.getItem("appData");
+      if (value != null) {
+        setNoteArr(JSON.parse(value));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   function deleteNote() {
     const newArr = [];
@@ -33,8 +74,6 @@ const Home = () => {
       setNoteArr(newArr);
     }
   }
-
-  function hashGenerator() {}
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -65,7 +104,7 @@ const Home = () => {
                   title={notes.note}
                   info={notes.content}
                   onDelete={deleteNote}
-                />
+                ></Note>
               );
             })}
           </ScrollView>
